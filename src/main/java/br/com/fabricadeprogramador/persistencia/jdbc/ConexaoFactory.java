@@ -8,6 +8,17 @@ public class ConexaoFactory {
 
 	public static Connection getConnection() {
 
+		
+		//fazer  o tom ler o driver local 
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		
+		
 		Connection c=null;
 		try {
 			c = DriverManager
