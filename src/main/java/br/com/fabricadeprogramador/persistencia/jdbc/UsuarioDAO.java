@@ -2,7 +2,10 @@ package br.com.fabricadeprogramador.persistencia.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.fabricadeprogramador.persistencia.entidade.Usuario;
 
@@ -55,13 +58,11 @@ public class UsuarioDAO {
 		}
 	}
 
-	
-	public void excluir (Usuario usuario) {
+	public void excluir(Usuario usuario) {
 		String sql = "delete from usuario where id=?";
 		try (PreparedStatement preparador = con.prepareStatement(sql);) {
 
 			preparador.setInt(1, usuario.getId());
-		
 
 			preparador.execute();
 			// preparador.close();
@@ -71,15 +72,7 @@ public class UsuarioDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * Salva com Insert ou Update Se o usuario tiver id então altera senao
 	 * insere
@@ -94,4 +87,26 @@ public class UsuarioDAO {
 		}
 	}
 
+	public List<Usuario> buscarTodos() {
+
+		List<Usuario> lista = new ArrayList<Usuario>();
+		String sql = "Select * from usuario";
+		try (PreparedStatement preparador = con.prepareStatement(sql)) {
+
+			ResultSet resultado = preparador.executeQuery();
+			Usuario usuario;
+			while (resultado.next()) {
+				usuario = new Usuario();
+				usuario.setId(resultado.getInt("id"));
+				usuario.setNome(resultado.getString("nome"));
+				usuario.setLogin(resultado.getString("login"));
+				usuario.setSenha(resultado.getString("senha"));
+				lista.add(usuario);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
 }
