@@ -10,23 +10,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-
-<table border="1">
+<body><table border="1">
 	<tr>
 		<th> ID </th>
 		<th> NOME </th>
+		<th > &nbsp; </th>
 	</tr>
 <%
 //Acessando dados do Servlet
 List<Usuario> lista = (List<Usuario>)request.getAttribute("listaUsu");
 //Gerando linhas na tabela para imprimir os dados
-for (Usuario u:lista){
-	out.print("<tr>  <td> "+ u.getId() + " </td> <td> "+ u.getNome() + "</td></tr>");
+for (Usuario u:lista){ 
+%>
+	<tr>  
+		<td><%=u.getId()%>  </td> 
+		<td><%= u.getNome() %></td> 
+		<td> <a href="usucontroller.do?acao=alt&id=<%=u.getId()%>">Editar</a> </td>   
+	</tr>
+
+<%
 }
 %>
 
 </table>
+
 
 
 </body>
